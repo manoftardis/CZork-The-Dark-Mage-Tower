@@ -12,7 +12,7 @@ typedef struct Player
 }Player;
 
 //Move the player from the current room to dest room if they are directly connected
-void MoveTo(Player* p, Room* dest);
+void MoveTo(Player* p,char* dest);
 
 //print the current room name and description
 void Look(Player* p);
