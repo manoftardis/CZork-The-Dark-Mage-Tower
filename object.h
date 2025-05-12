@@ -60,10 +60,13 @@ char* getDesc_Text(Object* o);
 
 void addObject(ObjectContainer* c, Object* o);
 
-void removeObject(ObjectContainer* c, Object* o); //oppure passare l'oggetto e controllare l'area di memoria se esiste
+void removeObject(ObjectContainer* c, Object* o);
 
 void destroyObject(Object* o);
 
 void printContainer(ObjectContainer* c);
+
+//Open the obeject if it can be opened
+void openObject(Object* o);
 
 #endif
