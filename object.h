@@ -6,11 +6,10 @@
 typedef enum 
 {
     LOOKAT,
-    LOOKUNDER,
+    PUT,
     TAKE,
-    OPEN,
-    PULL,
-    PUSH,
+    COMBINE,
+    USE,
 
 } Action;
 
@@ -22,25 +21,14 @@ typedef struct object
 {
     char* name;
     char* desc;
-    //maybe we don't want this since the name will have the adjective
-    char** adjectives;
-
-    // Possible actions for the function array are 
-    // LOOK AT
-    // LOOK UNDER
-    // TAKE
-    // OPEN
-    // PULL
-    // PUSH
-    void (*actions[sizeof(Action)])();
-
 
     //boolean values
     uint8_t openable;
     uint8_t open;
-    uint8_t fixture;
     uint8_t carryable;
 
+
+    //object reference for a list
     Object* prevObj;
     Object* nextObj;
 

@@ -4,6 +4,21 @@
 #include "room.h"
 #include "object.h"
 
+typedef enum 
+{
+    LOOK,
+    LOOKAT,
+    TAKE,
+    MOVETO,
+    COMBINE,
+    PUT,
+    USE,
+    INVENTORY,
+
+} PAction;
+
+
+
 typedef struct Player
 {
     Room* currRoom;
@@ -17,17 +32,23 @@ void MoveTo(Player* p,char* dest);
 //print the current room name and description
 void Look(Player* p);
 
+//print the description of an object in the player inventory or room
+void LookAt(char* ObjectName);
+
+//combines two items in a new one if possible
+void Combine(Player *p, char* ObjectName1, char* ObjectName2);
+
+//insert an item from the player inventory inside the room inventory
+void Put(Player *p, char* ObjectName1);
+
 //take the object if present in the room
-void Take(Player* p, Object* o);
+void Take(Player* p, char* ObjectName1);
 
 //Print the player inventory
 void Inventory(Player* p);
 
-//Open the object if openable and closed and present
-void Open(Player* p, Object* o);
-
-//Close the object if openable and open and present
-void Close(Player* p, Object* o);
+//Use the item from the player inventory??
+void Use(Player* p, char* ObjectName1);
 
 //maybe move this function in the main file or rooms????
 void Win();
