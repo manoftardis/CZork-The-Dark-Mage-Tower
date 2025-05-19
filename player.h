@@ -4,7 +4,7 @@
 #include "room.h"
 #include "object.h"
 
-typedef enum 
+typedef enum PAction
 {
     LOOK,
     LOOKAT,
@@ -26,8 +26,10 @@ typedef struct Player
 
 }Player;
 
+Player* playerInit(Room* start, ObjectContainer* inventory);
+
 //Move the player from the current room to dest room if they are directly connected
-void MoveTo(Player* p,char* dest);
+void MoveTo(Player* p, char* dest);
 
 //print the current room name and description
 void Look(Player* p);

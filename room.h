@@ -1,21 +1,33 @@
 #ifndef ROOM_H
 #define ROOM_H
 
-#include "object.h"
 #include <stdint.h>
+#include <stddef.h>
 
-struct Player;
+#include "door.h"
+#include "object.h"
 
-typedef enum EDirection
-{
-    NORTH,
-    SOUTH,
-    EAST,
-    WEST,
+#define FOREACH_DIR(DIR) \
+        DIR(NORTH)   \
+        DIR(SOUTH)  \
+        DIR(EAST)   \
+        DIR(WEST)  \
+        DIR(ERROR) \
 
+#define GENERATE_ENUM(ENUM) ENUM,
+#define GENERATE_STRING(STRING) #STRING,
+
+typedef enum EDirection {
+    FOREACH_DIR(GENERATE_ENUM)
 }EDirection;
 
-const char* direction[] = {"NORTH", "SOUTH", "EAST", "WEST", NULL};
+static const char *Direction_String[] = {
+    FOREACH_DIR(GENERATE_STRING)
+};
+
+static size_t Direction_Size = sizeof(Direction_String) / sizeof(Direction_String[0]);
+
+struct Player;
 
 typedef struct Room
 {
@@ -24,18 +36,24 @@ typedef struct Room
     
     uint8_t visited;
 
-    //one or multiple ones???
-    Room* north;
-    Room* south;
-    Room* east;
-    Room* west;
+    Door* north;
+    Door* south;
+    Door* east;
+    Door* west;
 
-    void (*enterFunc)(struct Player* p);
-    void (*exitFunc)(char* dir);
+    ObjectContainer* inventory;
+
+    char* (*enterRoom)();
+    char* (*exitRoom)();
 
 }Room;
 
+Room* initRoom(char* name, char* desc);
+
 Room* getRoom_Dir(Room* r, EDirection dir);
 
+char* getRoomDesc(Room* r);
+
+char* getRoomName(Room* r);
 
 #endif

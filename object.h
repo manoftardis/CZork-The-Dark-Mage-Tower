@@ -3,21 +3,10 @@
 
 #include <stdint.h>
 
-typedef enum 
-{
-    LOOKAT,
-    PUT,
-    TAKE,
-    COMBINE,
-    USE,
-
-} Action;
-
-
 // Calling an actions has different results, depending on the function we have different arguments required
 // Usually they are the new description of the item if interacting with it, the new room descrpition if it changes it and so on...
 
-typedef struct object 
+typedef struct Object 
 {
     char* name;
     char* desc;
@@ -29,10 +18,10 @@ typedef struct object
 
 
     //object reference for a list
-    Object* prevObj;
-    Object* nextObj;
+    struct Object* prevObj;
+    struct Object* nextObj;
 
-} Object;
+}Object;
 
 typedef struct objectContainer
 {
@@ -41,6 +30,10 @@ typedef struct objectContainer
 
 }ObjectContainer;
 
+
+Object* objectInit(char* name, char* desc, uint8_t openable, uint8_t open, uint8_t carryable);
+
+ObjectContainer* containerInit();
 
 char* getName_Text(Object* o);
 
