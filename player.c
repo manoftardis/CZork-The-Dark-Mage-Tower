@@ -28,7 +28,10 @@ void MoveTo(Player *p, char *dest)
     if (move == ERROR)
         printf("%s is not a valid direction \n", dest);
     else
+    {
         p->currRoom = getRoom_Dir(p->currRoom, move);
+        Look(p);
+    }
 }
 
 void Look(Player* p)
@@ -39,22 +42,27 @@ void Look(Player* p)
 
 void LookAt(char *ObjectName)
 {
+
 }
 
 void Combine(Player *p, char *ObjectName1, char *ObjectName2)
 {
+
 }
 
 void Put(Player *p, char *ObjectName1)
 {
+    
 }
 
 void Take(Player *p, char *ObjectName1)
 {
+
 }
 
 void Inventory(Player *p)
 {
+    printContainer(p->inventory);
 }
 
 void Use(Player *p, char *ObjectName1)

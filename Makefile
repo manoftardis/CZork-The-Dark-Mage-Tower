@@ -1,8 +1,8 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c99 -pedantic -g
 MAIN = zork
-INCS = object.h player.h room.h
-SRC = zork.c object.c player.c room.c
+INCS = object.h player.h room.h door.h utility.h
+SRC = zork.c object.c player.c room.c door.c
 
 .PHONY: prep all clean
 

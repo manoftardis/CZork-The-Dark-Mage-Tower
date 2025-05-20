@@ -31,42 +31,83 @@ Room* getRoom_Dir(Room* r, EDirection dir)
     {
         return ret;
     }
+
     else if(strcmp(direc, "NORTH") == 0)
     {
         if(r->north != NULL)
         {
-            printf("You are moving towards: %s\n", direc);
-            ret = r->north;
+            if(r->north->open)
+            {
+                if(r->north->room_from == r)
+                    ret = r->north->room_to;
+                else
+                    ret = r->north->room_from;
+            }
+            else
+            {
+                 printf("The door is shut\n");
+            }
+
         }
         else
             printf("You can't move towards: %s\n", direc);
     }
     else if(strcmp(direc, "SOUTH") == 0)
     {
-        if(r->south != NULL)
+         if(r->north != NULL)
         {
-            printf("You are moving towards: %s\n", direc);
-            ret = r->south;
+            if(r->north->open)
+            {
+                if(r->north->room_from == r)
+                    ret = r->north->room_to;
+                else
+                    ret = r->north->room_from;
+            }
+            else
+            {
+                 printf("The door is shut\n");
+            }
+
         }
         else
             printf("You can't move towards: %s\n", direc);
     }
     else if(strcmp(direc, "EAST") == 0)
     {
-        if(r->east != NULL)
+         if(r->north != NULL)
         {
-            printf("You are moving towards: %s\n", direc);
-            ret = r->east;
+            if(r->north->open)
+            {
+                if(r->north->room_from == r)
+                    ret = r->north->room_to;
+                else
+                    ret = r->north->room_from;
+            }
+            else
+            {
+                 printf("The door is shut\n");
+            }
+
         }
         else
             printf("You can't move towards: %s\n", direc);
     }
     else if(strcmp(direc, "WEST") == 0)
     {
-        if(r->west != NULL)
+         if(r->north != NULL)
         {
-            printf("You are moving towards: %s\n", direc);
-            ret = r->west;
+            if(r->north->open)
+            {
+                if(r->north->room_from == r)
+                    ret = r->north->room_to;
+                else
+                    ret = r->north->room_from;
+            }
+            else
+            {
+                 printf("The door is shut\n");
+            }
+
         }
         else
             printf("You can't move towards: %s\n", direc);

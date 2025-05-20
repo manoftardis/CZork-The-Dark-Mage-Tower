@@ -109,11 +109,17 @@ void removeObject(ObjectContainer* c, Object* o)
 void printContainer(ObjectContainer* c)
 {
     Object* elem = c->headObject;
-    while(elem)
+    if(elem == NULL)
     {
-        printf("%s", getName_Text(elem));
-        printf("%s", getDesc_Text(elem));
-        printf("\n\n");
-        elem = elem->nextObj;
+        printf("Your inventory is empty\n");
+    }
+    else{
+        while(elem)
+        {
+            printf("%s", getName_Text(elem));
+            printf("%s", getDesc_Text(elem));
+            printf("\n\n");
+            elem = elem->nextObj;
+        }
     }
 }

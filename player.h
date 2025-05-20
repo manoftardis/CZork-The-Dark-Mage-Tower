@@ -55,7 +55,4 @@ void Use(Player* p, char* ObjectName1);
 //maybe move this function in the main file or rooms????
 void Win();
 
-//same as win maybe
-void Start();
-
 #endif

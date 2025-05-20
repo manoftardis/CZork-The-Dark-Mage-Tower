@@ -4,8 +4,8 @@
 #include <stdint.h>
 #include <stddef.h>
 
-#include "door.h"
 #include "object.h"
+#include "door.h"
 
 #define FOREACH_DIR(DIR) \
         DIR(NORTH)   \

@@ -7,6 +7,20 @@
 #include "object.h"
 #include "player.h"
 #include "door.h"
+#include "utility.h"
+
+//escape characters: \033 for \e
+
+/*
+    Colors table
+    ---------------
+    | code | color|
+    |
+    |
+    |
+    |
+    ---------------
+ */
 
 
 void start(void);
@@ -31,17 +45,18 @@ int main()
 void start()
 {
     createRooms();
-    spawnPlayer();
     printf("You awaken at the foot of Castle Ghirenthal. Mist curls around your boots and clings to the"
     " twisted vines that strangle its outer walls. The morning sun is dim, trapped behind a veil of"
     " clouds. Before you, the castle’s wooden gates creak half-open, as if the structure itself were"
     " breathing — reluctantly alive.\n"
-    " The King summoned you in secret. “My daughter, Princess Lysenna, has been taken,” he"
+    "The King summoned you in secret. “My daughter, Princess Lysenna, has been taken,” he"
     " whispered, his voice worn with guilt. “The Dark Mage holds her in the tower’s peak. My son..."
     " went before you. But he did not return.”\n"
-    " Some say the prince was defeated. Others say he betrayed them all. But darker rumors claim"
+    "Some say the prince was defeated. Others say he betrayed them all. But darker rumors claim"
     " he never left — that he was engulfed in the tower itself.\n"
-    " Now, it's your turn. The last hope of the realm.\n");
+    "Now, it's your turn. The last hope of the realm.\n"
+    "You step through the gate.\n");
+    spawnPlayer();
     while(playing)
     {
         getInput();
@@ -54,20 +69,24 @@ void createRooms()
                         " with moss. \nTwo shattered statues stand beside the entryway, their faces worn smooth by time. A"
                         " pool of brackish water reflects your image… or something close to it. For a moment, the eyes"
                         " staring back at you are not your own.\n"
-                        "On the ground near the far wall, you spot something strange: a withered \e[31mbat\e[0m carcass, curled"
+                        "On the ground near the far wall, you spot something strange: a withered \033[31mbat\033[0m carcass, curled"
                         " and desiccated. It might be useful later, if you know your alchemy.\n"
                         "There are three doorways leading deeper into the tower:  \n"
-                        "-  To the \e[32mnorth\e[0m, a massive \e[33miron door\e[0m blocks the path upward. A keyhole gleams in the shape"
+                        "-  To the \033[32mnorth\033[0m, a massive \033[33miron door\033[0m blocks the path upward. A keyhole gleams in the shape"
                         " of a dragon’s eye.\n"
-                        "-  To the \e[32mwest\e[0m, a \e[33mpartially shattered wooden door\e[0m hangs crookedly. Through the cracks, you"
+                        "-  To the \033[32mwest\033[0m, a \033[33mpartially shattered wooden door\033[0m hangs crookedly. Through the cracks, you"
                         " glimpse what looks like a small side-room or storage hut.\n"
-                        "-  To the \e[32meast\e[0m, a \e[33mstone archway\e[0m leads into what smells like an old storeroom.\n");
+                        "-  To the \033[32meast\033[0m, a \033[33mstone archway\033[0m leads into what smells like an old storeroom.\n");
+    
+    startRoom = floor1;
+
+
     Room* cabin = initRoom("The Cabin", " Peering through the gaps, you glimpse a dusty cabin interior. On the floor, something glints…"
                         " a key perhaps? You’ll need something to pry these boards loose\n");
     Room* storage = initRoom("The Storage Room", "You step into the storeroom. The air grows cooler, damp. The scent of mildew and rust clings to"
                         " everything.\n"
-                        "-  To the \e[32mnorth\e[0m, a stack of old crates — some open, some nailed shut.\n"
-                        "-  To the \e[32msouth\e[0m, a heavy wooden door covered in thick \e[33mgray fungus\e[0m and patches of hardened,"
+                        "-  To the \033[32mnorth\033[0m, a stack of old crates — some open, some nailed shut.\n"
+                        "-  To the \033[32msouth\033[0m, a heavy wooden door covered in thick \033[33mgray fungus\033[0m and patches of hardened,"
                         " bubbling slime. It's sealed completely. Something about that growth makes your skin crawl.\n");
     Room* secret1 = initRoom("Secret1", "This is the Secret Room");
 
@@ -217,6 +236,9 @@ void createRooms()
     floor4->north = arched_door;
 
     //create the object containers
+
+    inventory = containerInit();
+
     ObjectContainer* floor1_c = containerInit();
     ObjectContainer* storeroom_c = containerInit();
     ObjectContainer* floor2_c = containerInit();
@@ -313,8 +335,11 @@ void createRooms()
                             "The final entry is smeared with dark ink — or blood — and ends abruptly.\n"
                             "“I gave everything. Even myself.”", 0,0,0);
         //Void room
-    Object* cylinder;
-    Object* chest;
+    Object* cylinder = objectInit("Cylinder", "A small cylindrical mechanism, notched on the surface. It seems to have been intended to be used somewhere...",0,0,1);
+    Object* chest = objectInit("Wooden Chest", "A small wooden chest. When you look at it you feel nostalgic, but also uneasy. On the right side"
+                            " it has a lever and inside the chest there is a small mechanism connected to it. It doesn't seem"
+                            " to work though. Maybe it needs something else?",0,0,1);
+                                    
 
     //fill the rooms with the objects
 
@@ -364,15 +389,16 @@ void createRooms()
 
 void spawnPlayer(void)
 {
-    player = playerInit(startRoom, NULL);
+    player = playerInit(startRoom, inventory);
+    Look(player);
 }
 
 void getInput()
 {
-    char tmp[256];
-    char* command = malloc(256 * sizeof(char));
-    char* arg1 = malloc(256 * sizeof(char));
-    char* arg2 = malloc(256 * sizeof(char));
+    char* tmp = calloc(256, sizeof(char));
+    char* command = calloc(256, sizeof(char));
+    char* arg1 = calloc(256, sizeof(char));
+    char* arg2 = calloc(256, sizeof(char));
 
     char* result = fgets(InputBuffer, 256, stdin);
     if (result != NULL)
@@ -388,21 +414,32 @@ void getInput()
             int i;
             for(i = 0; i < 254 && *result != '\0' && !(isspace(*result))  && *result != EOF && *result != '\n'; i++, result++)
             {
-                tmp[i] = *result; 
+                    tmp[i] = *result; 
+                    tmp[i+1] = '\0';
             }
-            tmp[i+1] = '\0';
             strncpy(command, tmp, i);
 
             while(isspace(*result))
             {
                 result++;
             }
-
-            for(i = 0; i < 254 && *result != '\0' && !(isspace(*result))  && *result != EOF && *result != '\n'; i++, result++)
+            if( *result == '\"')
             {
-                tmp[i] = *result; 
+                result++;
+                for(i = 0; i < 254 && *result != '\0' && *result != EOF && *result != '\"' && *result != '\n'; i++, result++)
+                {
+                    tmp[i] = *result; 
+                    tmp[i+1] = '\0';
+                }
             }
-            tmp[i+1] = '\0';
+            else
+            {
+                for(i = 0; i < 254 && *result != '\0' && !(isspace(*result))  && *result != EOF && *result != '\n'; i++, result++)
+                {
+                    tmp[i] = *result; 
+                    tmp[i+1] = '\0';
+                }
+            }
             strncpy(arg1, tmp, i);
 
             while(isspace(*result))
@@ -410,18 +447,34 @@ void getInput()
                 result++;
             }
 
-            for(i = 0; i < 254 && *result != '\0' && !(isspace(*result))  && *result != EOF && *result != '\n'; i++, result++)
+            if( *result == '\"')
             {
-                tmp[i] = *result; 
+                result++;
+                for(i = 0; i < 254 && *result != '\0' && *result != EOF && *result != '\"' && *result != '\n'; i++, result++)
+                {
+                    tmp[i] = *result; 
+                    tmp[i+1] = '\0';
+                }
+
             }
-            tmp[i+1] = '\0';
+            else
+            {
+                for(i = 0; i < 254 && *result != '\0' && !(isspace(*result))  && *result != EOF && *result != '\n'; i++, result++)
+                {
+                    tmp[i] = *result; 
+                    tmp[i+1] = '\0';
+                }
+            }
             strncpy(arg2, tmp, i);
         }
+    stringToUpper(command);
+    stringToUpper(arg1);
+    stringToUpper(arg2);
+
     }
     if(strcmp(command, "MOVETO") == 0)
     {
         MoveTo(player, arg1);
-        Look(player);
     }
     else if(strcmp(command, "LOOK") == 0)
     {
@@ -455,5 +508,10 @@ void getInput()
     {
         printf("%s is not a valid command \n", command);
     }
+
+    free(command);
+    free(arg1);
+    free(arg2);
+
     return;
 }
