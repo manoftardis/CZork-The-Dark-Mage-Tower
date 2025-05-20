@@ -4,15 +4,17 @@
 #include "object.h"
 #include "string.h"
 
-Object *objectInit(char *name, char *desc, uint8_t openable, uint8_t open, uint8_t carryable)
+Object *objectInit(char *name, char *desc, uint8_t openable, uint8_t open, uint8_t carryable, uint8_t usable)
 {
-    Object* ret = malloc(sizeof(Object));
+    Object* ret = calloc(sizeof(Object), 1);
 
     ret->name = name;
     ret->desc = desc;
     ret->openable = openable;
     ret->open = open;
     ret->carryable = carryable;
+    ret->usable = usable;
+    ret->usability = NULL; // Pointer to usability struct, NULL if not usable
 
     ret->nextObj = NULL;
     ret->prevObj = NULL;//
@@ -20,9 +22,24 @@ Object *objectInit(char *name, char *desc, uint8_t openable, uint8_t open, uint8
     return ret;
 }
 
+ObjectUsability* objectUsabilityInit()
+{
+    ObjectUsability* ret = malloc(sizeof(ObjectUsability));
+    ret->usableRoomCount = 0;
+    ret->usedRoomCount = 0;
+
+    for(int i = 0; i < 5; i++)
+    {
+        ret->usableRooms[i] = NULL;
+        ret->usedInRooms[i] = NULL;
+    }
+
+    return ret;
+}
+
 ObjectContainer *containerInit()
 {
-    ObjectContainer* ret = malloc(sizeof(ObjectContainer));
+    ObjectContainer* ret = calloc(sizeof(ObjectContainer), 1);
 
     ret->headObject = NULL;
     ret->lastObject = NULL;
@@ -32,7 +49,7 @@ ObjectContainer *containerInit()
 
 char *getName_Text(Object *o)
 {
-    char* buffer = malloc(1024 * sizeof(char)); 
+    char* buffer = calloc(1024 * sizeof(char), 1); 
     strcpy(buffer, "a ");
     strcat(buffer, o->name);
     if (o->openable)
@@ -48,7 +65,7 @@ char *getName_Text(Object *o)
 
 char* getDesc_Text(Object* o)
 {
-    char* buffer = malloc(2048 * sizeof(char)); 
+    char* buffer = calloc(2048 * sizeof(char), 1); 
     strcpy(buffer, o->desc);
     if (o->openable)
     {
@@ -82,6 +99,8 @@ void removeObject(ObjectContainer* c, Object* o)
     {
         //set the head to the next object
         c->headObject = c->headObject->nextObj;
+        if (c->headObject != NULL)
+            c->headObject->prevObj = NULL;
 
         //if new head is null, tail is null too
         if(c->headObject == NULL)
@@ -94,9 +113,14 @@ void removeObject(ObjectContainer* c, Object* o)
         {
             if(next == o)
             {
-                next->prevObj->nextObj = next->nextObj;
-                next->nextObj->prevObj = next->prevObj;
-                next = NULL;
+                if (next->prevObj)
+                    next->prevObj->nextObj = next->nextObj;
+                if (next->nextObj)
+                    next->nextObj->prevObj = next->prevObj;
+                // If removing the last object, update lastObject
+                if (c->lastObject == next)
+                    c->lastObject = next->prevObj;
+                break; // done!
             }
             else
             {

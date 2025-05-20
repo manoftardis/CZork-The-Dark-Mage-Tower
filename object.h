@@ -6,6 +6,15 @@
 // Calling an actions has different results, depending on the function we have different arguments required
 // Usually they are the new description of the item if interacting with it, the new room descrpition if it changes it and so on...
 
+typedef struct ObjectUsability {
+    struct Room *usableRooms[5];
+    int usableRoomCount;
+    struct Room *usedInRooms[5];
+    int usedRoomCount;
+} ObjectUsability;
+
+ObjectUsability* objectUsabilityInit();
+
 typedef struct Object 
 {
     char* name;
@@ -15,7 +24,9 @@ typedef struct Object
     uint8_t openable;
     uint8_t open;
     uint8_t carryable;
+    uint8_t usable;
 
+    ObjectUsability* usability; // Pointer to usability struct, NULL if not usable
 
     //object reference for a list
     struct Object* prevObj;
@@ -31,7 +42,7 @@ typedef struct objectContainer
 }ObjectContainer;
 
 
-Object* objectInit(char* name, char* desc, uint8_t openable, uint8_t open, uint8_t carryable);
+Object* objectInit(char* name, char* desc, uint8_t openable, uint8_t open, uint8_t carryable, uint8_t usable);
 
 ObjectContainer* containerInit();
 

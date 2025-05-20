@@ -54,14 +54,14 @@ Room* getRoom_Dir(Room* r, EDirection dir)
     }
     else if(strcmp(direc, "SOUTH") == 0)
     {
-         if(r->north != NULL)
+         if(r->south != NULL)
         {
-            if(r->north->open)
+            if(r->south->open)
             {
-                if(r->north->room_from == r)
-                    ret = r->north->room_to;
+                if(r->south->room_from == r)
+                    ret = r->south->room_to;
                 else
-                    ret = r->north->room_from;
+                    ret = r->south->room_from;
             }
             else
             {
@@ -74,14 +74,14 @@ Room* getRoom_Dir(Room* r, EDirection dir)
     }
     else if(strcmp(direc, "EAST") == 0)
     {
-         if(r->north != NULL)
+         if(r->east != NULL)
         {
-            if(r->north->open)
+            if(r->east->open)
             {
-                if(r->north->room_from == r)
-                    ret = r->north->room_to;
+                if(r->east->room_from == r)
+                    ret = r->east->room_to;
                 else
-                    ret = r->north->room_from;
+                    ret = r->east->room_from;
             }
             else
             {
@@ -94,14 +94,14 @@ Room* getRoom_Dir(Room* r, EDirection dir)
     }
     else if(strcmp(direc, "WEST") == 0)
     {
-         if(r->north != NULL)
+         if(r->west != NULL)
         {
-            if(r->north->open)
+            if(r->west->open)
             {
-                if(r->north->room_from == r)
-                    ret = r->north->room_to;
+                if(r->west->room_from == r)
+                    ret = r->west->room_to;
                 else
-                    ret = r->north->room_from;
+                    ret = r->west->room_from;
             }
             else
             {

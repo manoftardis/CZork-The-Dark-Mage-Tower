@@ -69,7 +69,7 @@ void createRooms()
                         " with moss. \nTwo shattered statues stand beside the entryway, their faces worn smooth by time. A"
                         " pool of brackish water reflects your image… or something close to it. For a moment, the eyes"
                         " staring back at you are not your own.\n"
-                        "On the ground near the far wall, you spot something strange: a withered \033[31mbat\033[0m carcass, curled"
+                        "On the ground near the far wall, you spot something strange: a withered \033[31mbat carcass\033[0m, curled"
                         " and desiccated. It might be useful later, if you know your alchemy.\n"
                         "There are three doorways leading deeper into the tower:  \n"
                         "-  To the \033[32mnorth\033[0m, a massive \033[33miron door\033[0m blocks the path upward. A keyhole gleams in the shape"
@@ -88,7 +88,16 @@ void createRooms()
                         "-  To the \033[32mnorth\033[0m, a stack of old crates — some open, some nailed shut.\n"
                         "-  To the \033[32msouth\033[0m, a heavy wooden door covered in thick \033[33mgray fungus\033[0m and patches of hardened,"
                         " bubbling slime. It's sealed completely. Something about that growth makes your skin crawl.\n");
-    Room* secret1 = initRoom("Secret1", "This is the Secret Room");
+    Room* secret1 = initRoom("Secret Room", "You walk through the dark corridor for a few minutes." 
+                        "The air gets colder and colder until you come across a very old wooden table, lit only by a dim candle. "
+                        "On the table, there is a small wooden \033[31mchest\033[0m. You open it, and inside is a message that reads:\n\n"
+                        "This tower is not just a tower. "
+                        "It is something that we all have inside of us. It is the shadow that weighs on our hearts every day. "
+                        "Some can bear its weight, while others are devoured by it. Whoever built this tower, has not only lost his heart, "
+                        "he has lost everything that reminded him of being human. In place of a heart, he has only a chasm, panting and drooling in the darkness. "
+                        "It is too late to ask if it is his fault or if he is just a victim. He must be stopped. \n\n"
+                        "You who are reading this, please help me. Free me from him.\n\n"
+                        "You will need another fragment to reveal the truth. To do that, you will have to \033[34mchange\033[0m and \033[34mdeceive\033[0m.\n");
 
     Room* floor2 = initRoom("The Statue Room", "You begin your ascent. The stairs curve tightly, the air growing colder with each step. "
                         "The stone walls sweat moisture. You feel watched — not by eyes, but by something else, as if the tower"
@@ -252,23 +261,23 @@ void createRooms()
         //atrium
 
     Object* bat = objectInit("Bat Carcass", "The crumpled remains of a bat — wings shriveled, fur stiff, but faintly magical..\n",
-                            0, 0, 1);
+                            0, 0, 1, 0);
 
         //store room
     Object* crates = objectInit("Crates", "Most of the crates are filled with rotted linens, rusted nails, and broken tools. But in one —"
                             " buried beneath a moldy burlap sack — you uncover a rusted crowbar. Its grip is worn, but the"
-                            " iron is solid enough.",0,0,0);
+                            " iron is solid enough.",0,0,0,0);
                             
     Object* crowbar = objectInit("Crowbar","A rusted crowbar, heavy and stained. Still sturdy enough to pry open secrets."
-                                " What if the rust was...dried blood?", 0,0,1);
+                                " What if the rust was...dried blood?", 0,0,1,1);
 
         //statue room
-    Object* ranger = objectInit("Lens", "A warped glass lens, warm to the touch. Taken from the watchful ranger statue.",0,0,1);
-    Object* fisherman = objectInit("Hook", "A bone-crafted hook, deceptively light. Claimed from the ever-casting fisherman.",0,0,1);
-    Object* shipwright = objectInit("Shard", "A jagged rudder shard, still reflecting the shipwright’s silent scrutiny.",0,0,1);
-    Object* knight = objectInit("Fang", "A beast’s fang, dark and dulled. Plucked from the fearless knight’s strike.",0,0,1);
-    Object* thief = objectInit("Key", "A crooked iron key, cold with intent. Found near the thief and his broken vault.",0,0,1);
-    Object* messenger = objectInit("Seal", "A red wax seal, unbroken. Taken from the kneeling messenger’s offering",0,0,1);
+    Object* ranger = objectInit("Lens", "A warped glass lens, warm to the touch. Taken from the watchful ranger statue.",0,0,1,0);
+    Object* fisherman = objectInit("Hook", "A bone-crafted hook, deceptively light. Claimed from the ever-casting fisherman.",0,0,1,0);
+    Object* shipwright = objectInit("Shard", "A jagged rudder shard, still reflecting the shipwright’s silent scrutiny.",0,0,1,0);
+    Object* knight = objectInit("Fang", "A beast’s fang, dark and dulled. Plucked from the fearless knight’s strike.",0,0,1,0);
+    Object* thief = objectInit("Key", "A crooked iron key, cold with intent. Found near the thief and his broken vault.",0,0,1,0);
+    Object* messenger = objectInit("Seal", "A red wax seal, unbroken. Taken from the kneeling messenger’s offering",0,0,1,0);
         
         //Alchemy room
     Object* worktable = objectInit("The Alchemy Worktable","The alchemical workbench is a mess of tubing, decanters, ink-splotched pages, and melted"
@@ -280,11 +289,11 @@ void createRooms()
                             "There's also a small note, near the tome, that says:\n"
                             " Tricks and traps are the only way for wizards to be strong and powerful. Without them, they"
                             " are just weak. This is a hard truth, and the first lesson every wizard learns. This power is"
-                            " dangerous, for without wisdom it can make a wizard a deceiver.",0,0,0);
+                            " dangerous, for without wisdom it can make a wizard a deceiver.",0,0,0,0);
 
     Object* alembic = objectInit("Alembic","A functional alembic, cleaned and cool, sits ready for use. Tubes coil like frozen serpents"
                             " around a glass heart. When ingredients are inserted, they shimmer briefly — as if the vessel"
-                            " recognizes intent. A faint heat hums from the base, despite no fire being visible",0,0,0);
+                            " recognizes intent. A faint heat hums from the base, despite no fire being visible",0,0,0,0);
     Object* alchemy_tome = objectInit("Alchemy Tome","An open tome lies on the table, its brittle pages splayed beneath a golden ribbon. The ink is"
                             " faded in parts, but three recipes are clearly marked"
                             "Shrink Potion — “To slip where flesh should not pass.”\n"
@@ -293,26 +302,26 @@ void createRooms()
                             "Ingredients: Hair and Withered Bat Wing\n\n"
                             "Corrosive Potion — No recipe remains, only a swirling violet spiral in the margin, pulsing"
                             "slightly on the page. A handwritten note beside it reads: “Color tells what the mind"
-                            "forgets.”" ,0,0,0 );
-    Object* glimmerleaf = objectInit("Dried Glimmerleaf", "A sealed jar of glowing, translucent leaves. They shimmer like moonlight on water.",0,0,1);
+                            "forgets.”" ,0,0,0,0);
+    Object* glimmerleaf = objectInit("Dried Glimmerleaf", "A sealed jar of glowing, translucent leaves. They shimmer like moonlight on water.",0,0,1,0);
 
         //Ingredient room
     Object* cabinet = objectInit("Glass Cabinet", "nside the sealed display case lies a lock of silvery-black hair, curled unnaturally, bound with a"
                             " silk ribbon now faded.\n"
                             "It shimmers oddly in the light — almost as if caught between the shadows.\n"
                             "A note beneath the case reads only:"
-                            "“That which remains when the crown is lost, and the heart turns to ash.”", 1, 0, 0);
-    Object* hair = objectInit("Silvery-black hair", "A single braid of hair, both regal and wild. It crackles with two natures",0,0,0);
-    Object* vial = objectInit("Vial", "A vial filled with a swirl thick and violet", 0,0,1);
-    Object* root = objectInit("Black root", "A twisted root, black as soot. Bitter-smelling, with cracks that bleed sap.", 0,0,1);
+                            "“That which remains when the crown is lost, and the heart turns to ash.”", 1, 0, 0, 0);
+    Object* hair = objectInit("Silvery-black hair", "A single braid of hair, both regal and wild. It crackles with two natures",0,0,0,0);
+    Object* vial = objectInit("Vial", "A vial filled with a swirl thick and violet", 0,0,1,0);
+    Object* root = objectInit("Black root", "A twisted root, black as soot. Bitter-smelling, with cracks that bleed sap.", 0,0,1,0);
 
         //Library room
     
     Object* book_magic = objectInit("Magic Book", "The title is seared into the cover in curling silver: “Dominion Through Shadow”"
                             "Flipping it open, the pages are filled with forgotten incantations, blood-bound glyphs, and"
                             " forbidden rites.\n"
-                            "You sense instinctively: you will not survive the final confrontation without this knowledge.”", 0, 0, 1 );
-    Object* book_key = objectInit("Green Tome","“On the Nature of Deceive” – a worn green tome with no author.",0,0,1);
+                            "You sense instinctively: you will not survive the final confrontation without this knowledge.”", 0, 0, 1, 0);
+    Object* book_key = objectInit("Green Tome","“On the Nature of Deceive” – a worn green tome with no author.",0,0,1,1);
 
         //Secret chamber room
     
@@ -322,8 +331,8 @@ void createRooms()
                             " something inside denies your presence. A whisper forms in your mind:\n"
                             "“You are not the one who bound me.”\n"
                             "The mirror will not open to your current form.\n"
-                            "Only a master of dark magic — in his own image — may command it.", 0 ,0 ,0);
-    Object* desk = objectInit("Writing Desk", "A desk cluttered with notes, scrolls. A single book lies open on it, a leather bound diary with silver emblem on its cover", 0, 0 ,1);
+                            "Only a master of dark magic — in his own image — may command it.", 0 ,0 ,0, 0);
+    Object* desk = objectInit("Writing Desk", "A desk cluttered with notes, scrolls. A single book lies open on it, a leather bound diary with silver emblem on its cover",0,0,0,0);
     Object* diary = objectInit("Diary", "The diary's leather cover is cracked, as if touched too often by trembling hands. Engraved on"
                             " the front of the diary: Prince Aetherion Larch.. Inside, the early entries speak of affection,"
                             " admiration — obsession. He writes of the princess not as a person, but as a destiny.\n"
@@ -333,13 +342,26 @@ void createRooms()
                             "“She belongs in this tower. She belongs with me. I will seal the world away, and we shall"
                             " remain… forever.”\n"
                             "The final entry is smeared with dark ink — or blood — and ends abruptly.\n"
-                            "“I gave everything. Even myself.”", 0,0,0);
+                            "“I gave everything. Even myself.”", 0,0,0,0);
         //Void room
-    Object* cylinder = objectInit("Cylinder", "A small cylindrical mechanism, notched on the surface. It seems to have been intended to be used somewhere...",0,0,1);
+    Object* cylinder = objectInit("Cylinder", "A small cylindrical mechanism, notched on the surface. It seems to have been intended to be used somewhere...",0,0,1,0);
     Object* chest = objectInit("Wooden Chest", "A small wooden chest. When you look at it you feel nostalgic, but also uneasy. On the right side"
                             " it has a lever and inside the chest there is a small mechanism connected to it. It doesn't seem"
-                            " to work though. Maybe it needs something else?",0,0,1);
+                            " to work though. Maybe it needs something else?",0,0,1,0);
                                     
+
+        //Usable Objects
+    ObjectUsability* crowbar_usability = objectUsabilityInit();
+    if (!crowbar_usability) {
+    printf("Failed to allocate crowbar_usability!\n");
+    exit(1);
+    }
+    crowbar_usability->usableRoomCount = 2;
+    crowbar_usability->usableRooms[0] = floor1;
+    crowbar_usability->usableRooms[1] = potion;
+    crowbar_usability->usedRoomCount = 0;
+    crowbar->usability = crowbar_usability;
+
 
     //fill the rooms with the objects
 
@@ -482,7 +504,7 @@ void getInput()
     }
     else if(strcmp(command, "LOOKAT") == 0)
     {
-        LookAt(arg1);
+        LookAt(player, arg1);
     }
     else if(strcmp(command, "TAKE") == 0)
     {
@@ -503,6 +525,10 @@ void getInput()
     else if(strcmp(command, "INVENTORY") == 0)
     {
         Inventory(player);
+    }
+    else if(strcmp(command, "HELP") == 0)
+    {
+        Help();
     }
     else
     {

@@ -35,7 +35,7 @@ void MoveTo(Player* p, char* dest);
 void Look(Player* p);
 
 //print the description of an object in the player inventory or room
-void LookAt(char* ObjectName);
+void LookAt(Player* p, char *ObjectName);
 
 //combines two items in a new one if possible
 void Combine(Player *p, char* ObjectName1, char* ObjectName2);
@@ -54,5 +54,17 @@ void Use(Player* p, char* ObjectName1);
 
 //maybe move this function in the main file or rooms????
 void Win();
+
+Object* getObject(Player *p, char* ObjectName);
+//get the object name
+
+char* getObjectDesc(Object* o);
+//get the object description
+
+Object* getObjectFromContainer(ObjectContainer* c, char* ObjectName);
+//get the object from the container
+
+void Help();
+//print the help menu
 
 #endif

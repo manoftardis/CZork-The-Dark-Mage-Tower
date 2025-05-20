@@ -1,15 +1,18 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -std=c99 -pedantic -g
 MAIN = zork
-INCS = object.h player.h room.h door.h utility.h
-SRC = zork.c object.c player.c room.c door.c
+SRC = zork.c object.c player.c room.c door.c utility.c
+OBJ = $(SRC:.c=.o)
 
-.PHONY: prep all clean
+.PHONY: all clean
 
 all: $(MAIN)
 
-$(MAIN): $(SRC)
-	$(CC) $(CFLAGS) $(INCS) -o $(MAIN) $(SRC)
+$(MAIN): $(OBJ)
+	$(CC) $(CFLAGS) -o $(MAIN) $(OBJ)
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	$(RM) *.o *~ $(MAIN)
+	rm -f *.o *~ $(MAIN)
