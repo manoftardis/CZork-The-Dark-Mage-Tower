@@ -80,6 +80,7 @@ char* getDesc_Text(Object* o)
 
 void addObject(ObjectContainer* c, Object* o)
 {
+    //lista vuota
     if(c->headObject == NULL)
     {
         c->headObject = o;
@@ -119,7 +120,9 @@ void removeObject(ObjectContainer* c, Object* o)
                     next->nextObj->prevObj = next->prevObj;
                 // If removing the last object, update lastObject
                 if (c->lastObject == next)
-                    c->lastObject = next->prevObj;
+                    c->lastObject = next->prevObj; 
+                next->prevObj = NULL;
+                next->nextObj = NULL;
                 break; // done!
             }
             else
