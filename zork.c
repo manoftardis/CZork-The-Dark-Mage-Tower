@@ -490,6 +490,30 @@ void spawnPlayer(void)
     Look(player);
 }
 
+
+// Helper: parses next argument from *input, stores in dest, advances *input
+void parse_next_arg(char **input, char *dest, int maxlen) {
+    int i = 0;
+    // Skip leading whitespace
+    while (isspace(**input)) (*input)++;
+
+    if (**input == '\"') {
+        // Quoted argument
+        (*input)++; // skip opening quote
+        while (**input && **input != '\"' && **input != '\n' && i < maxlen - 1) {
+            dest[i++] = *((*input)++);
+        }
+        dest[i] = '\0';
+        if (**input == '\"') (*input)++; // skip closing quote
+    } else {
+        // Unquoted argument
+        while (**input && !isspace(**input) && **input != '\n' && i < maxlen - 1) {
+            dest[i++] = *((*input)++);
+        }
+        dest[i] = '\0';
+    }
+}
+
 void getInput()
 {
     char* tmp = calloc(256, sizeof(char));
@@ -500,74 +524,15 @@ void getInput()
     char* result = fgets(InputBuffer, 256, stdin);
     if (result != NULL)
     {
-        //handle the input
         if(*result != '\0' && *result != EOF && *result != '\n')
         {
-            while(isspace(*result))
-            {
-                result++;
-            }
-            //handle command
-            int i;
-            for(i = 0; i < 254 && *result != '\0' && !(isspace(*result))  && *result != EOF && *result != '\n'; i++, result++)
-            {
-                    tmp[i] = *result;
-                    tmp[i+1] = '\0';
-            }
-            strncpy(command, tmp, i);
-
-            while(isspace(*result))
-            {
-                result++;
-            }
-            if( *result == '\"')
-            {
-                result++;
-                for(i = 0; i < 254 && *result != '\0' && *result != EOF && *result != '\"' && *result != '\n'; i++, result++)
-                {
-                    tmp[i] = *result;
-                    tmp[i+1] = '\0';
-                }
-            }
-            else
-            {
-                for(i = 0; i < 254 && *result != '\0' && !(isspace(*result))  && *result != EOF && *result != '\n'; i++, result++)
-                {
-                    tmp[i] = *result;
-                    tmp[i+1] = '\0';
-                }
-            }
-            strncpy(arg1, tmp, i);
-
-            while(isspace(*result))
-            {
-                result++;
-            }
-
-            if( *result == '\"')
-            {
-                result++;
-                for(i = 0; i < 254 && *result != '\0' && *result != EOF && *result != '\"' && *result != '\n'; i++, result++)
-                {
-                    tmp[i] = *result;
-                    tmp[i+1] = '\0';
-                }
-
-            }
-            else
-            {
-                for(i = 0; i < 254 && *result != '\0' && !(isspace(*result))  && *result != EOF && *result != '\n'; i++, result++)
-                {
-                    tmp[i] = *result;
-                    tmp[i+1] = '\0';
-                }
-            }
-            strncpy(arg2, tmp, i);
+            parse_next_arg(&result, command, 256);
+            parse_next_arg(&result, arg1, 256);
+            parse_next_arg(&result, arg2, 256);
         }
-    stringToUpper(command);
-    stringToUpper(arg1);
-    stringToUpper(arg2);
-
+        stringToUpper(command);
+        stringToUpper(arg1);
+        stringToUpper(arg2);
     }
     if(strcmp(command, "MOVETO") == 0)
     {
