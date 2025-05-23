@@ -41,6 +41,68 @@ void MoveTo(Player *p, char *dest)
         p->currRoom = getRoom_Dir(p->currRoom, move);
         Look(p);
     }
+    if(strcmp(p->currRoom->name, "The Mage's Chamber") == 0)
+    {
+        if(getObjectFromContainer(p->currRoom->inventory, "Magic Book") == NULL)
+        {
+            printf("As the prince unleashes his spell, your hand tightens around the Book of Forbidden Arcana. "
+                "A barrier of dark flame erupts before you, matching his power stroke for stroke.\n"
+                "> “You’ve read it…” he hisses.\n"
+                "> “You don’t understand what it’s cost me!”\n\n"
+                "But you do.  The book guides you, whispering counter-spells, revealing the seams in his defenses.  With a final incantation, you summon a lance of pure light — forged from knowledge, loss, and resolve — and strike the prince through the heart.\n\n"
+                "He collapses, cloak folding around him like a burial shroud.\n"
+                "> “She… she was supposed to be… mine…”\n\n"
+                "His body dissolves, not into ash, but into pages — torn fragments of who he once was."
+                "The magical prison fades. The Princess falls to her knees.\n"
+                "> “You… you freed me.”");
+            if(getObjectFromContainer(p->currRoom->inventory, "Music Box") != NULL)
+            {
+                printf("The pages that once composed the dark wizard float around you and the princess, now free. It's the right time.\n"
+                    "You take the music box and activate it with the lever. The music begins to vibrate from the small chest. You embrace and together you shed tears for everything that has happened.\n"
+                    "But the prince is not really gone. This is not the end of the story yet. The prince is still out there, and it will not be long before he arrives for you too.\n"
+                    "The princess speaks to you: “My husband died a long time ago, killed by the prince. I created this tower to remember him, to denounce his crime to everyone. He still acts with impunity. Hidden, yes, but with impunity. "
+                    "If you have come this far, it means that we have already met, that I pushed you to come this far. I need you to kill the prince. His name is Charlton E. Haire.”\n"
+                    "As the princess dissolves into fragments of pages, she says her last words: “Kill him and you can have what you want. You can have me too if you want, I don't care about myself anymore.”\n"
+                    "The princess disappears and without her, you only have one question:\n\n"
+                    "WHAT WILL YOU DO NOW?\n");
+            }
+            else{
+                printf("The chamber stills.\n"
+                "The Princess stands free, tears staining her cheeks, yet her eyes scan the room — searching for something.\n"
+                "> “I wish there was another way” she whispers.\n"
+                "> “This tower… it changed him. It chose him.”\n\n"
+                "You help her descend the stairs, floor by floor, until the cold morning light pierces the atrium.\n"
+                "The wind feels different now. Lighter.\n"
+                "And yet… as the tower vanishes behind you, you glance back.\n"
+                "You swear you see a glimmer in the mirror on the fourth floor. A shape. Watching.\n"
+                "Some doors have opened.\n"
+                "But not all.  The tower still holds secrets.\n"
+                "And it may call to you again.\n\n\n\n");
+            printf("You have completed the game.\n");
+            printf("Thanks for Playing!\n");
+            }
+            printf("The clue to hack this machine is: \n"
+            "Try a SQL injection attack. After that you'll have two possible ways to enter the machine.\n"
+            "Both paths are in the profile settings.\n"
+            "Good Luck!\n");
+        }
+        else{ 
+            printf("The prince raises his hand and speaks a word soaked in malice.\n\n"
+            "You’re lifted into the air, your limbs frozen by invisible force. Your soul strains against the pull of something far older and crueler than death.\n"
+            "> “You walk blindly into a world you do not understand,” the prince whispers.\n"
+            "Without protection, your body is shattered by raw magic — disintegrated, scattered into oblivion.\n\n"
+            "As darkness takes you, one final thought flutters like a torn page in your mind:\n"
+            "> “There must have been something… a way… hidden in the tower...”\n"
+            "Then, nothing.\n");
+            printf("You have lost the game.\n");
+            printf("Thanks for Playing!\n");
+            
+        }
+        printf("Press any key to exit...\n");
+            char c;
+            scanf("%c", &c);
+            exit(0);
+    }
 }
 
 void Look(Player* p)
@@ -88,9 +150,9 @@ void Combine(Player *p, char *ObjectName1, char *ObjectName2)
         addObject(p->inventory, music_box);
 
     }
-    else if((strcmp(obj1->name, "Black Root") == 0 && strcmp(obj2->name, "Dried Glimmerleaf") == 0) || (strcmp(obj2->name, "Black Root") == 0 && strcmp(obj1->name, "Dried Glimmerleaf") == 0))
+    else if((strcmp(obj1->name, "Black root") == 0 && strcmp(obj2->name, "Dried Glimmerleaf") == 0) || (strcmp(obj2->name, "Black root") == 0 && strcmp(obj1->name, "Dried Glimmerleaf") == 0))
     {
-        if(strcmp(p->currRoom->name, "The Alchemy Room") != 0)
+        if(strcmp(p->currRoom->name, "The Laboratory") != 0)
         {
             printf("You cannot combine %s and %s here.\n", obj1->name, obj2->name);
             return;
@@ -132,7 +194,7 @@ void Combine(Player *p, char *ObjectName1, char *ObjectName2)
             addObject(p->inventory, amber_potion);
             ObjectUsability* amber_potion_usability = objectUsabilityInit();
             amber_potion_usability->usableRoomCount = 1;
-            amber_potion_usability->usableRooms[0] = p->currRoom->north->room_to->east->room_to;
+            amber_potion_usability->usableRooms[0] = p->currRoom->north->room_from->west->room_from;
             amber_potion_usability->usedRoomCount = 0;
             amber_potion->usability = amber_potion_usability;
         }
@@ -195,6 +257,18 @@ void Take(Player *p, char *ObjectName1)
                 printf("The glass cabinet is closed. You need to open it first.\n");
                 return;
             }
+        }
+        if(strcmp(obj->name, "Green Tome") == 0)
+        {
+            removeObject(p->currRoom->inventory, obj);
+            p->currRoom->west->open = 1;
+            printf("You tug on “On the Nature of Deceive.” "
+                "A low click echoes behind the shelves, followed by the grinding of stone. "
+                "Slowly, the shelf slides inward and pivots, revealing a hidden stairwell spiraling down into the darkness.\n"
+                "To the West, now the way to the secret chamber is open.\n"
+                "“A secret chamber lies beyond.”\n\n");
+            return;
+
         }
         removeObject(p->currRoom->inventory, obj);
         addObject(p->inventory, obj);
@@ -283,13 +357,40 @@ void Use(Player *p, char *ObjectName1)
         }
     }
     else if(strcmp(obj->name, "Vial") == 0) {
-        if(strcmp(p->currRoom->name, "The Atrium") == 0) {
+        if(strcmp(p->currRoom->name, "The Storage Room") == 0) {
             printf("You uncork the vial and carefully pour the corrosive liquid onto the fungal seal."
                 "At first, nothing happens. Then the door begins to hiss and sizzle, emitting a noxious green smoke. The mold melts away in bubbling globs, revealing the wooden door beneath.\n\n"
                 "Now that the door is open, there is a corridor in front of you that you cannot see the end of. The darkness swallows the warm light of the candles."
                 "There is no hope ahead, only the tenacity of those who want to discover the truth. \n"
                 "\033[35mThe way south is now open.\033[0m\n");
             p->currRoom->south->open = 1;
+            removeObject(p->inventory, obj);
+        }
+    }
+    else if(strcmp(obj->name, "Potion of Shrinking") == 0) {
+        if(strcmp(p->currRoom->name, "The Laboratory") == 0) {
+            printf("You uncork the vial and drink.  At first — nothing.\n"
+                "Then, the room stretches, twists, and expands around you. The table looms like a mountain. Your limbs feel weightless."
+                "You slip beneath the iron door with ease, stepping into darkness as the floorboards thrum like thunder underfoot."
+                "You pass through the crack into the fourth floor.\n"
+                "Then you open the door from the other side, so that you can freely move between the two rooms.\n");
+            p->currRoom->north->open = 1;
+            p->currRoom->north->room_from->south->open = 1;
+            p->currRoom = p->currRoom->north->room_from;
+            removeObject(p->inventory, obj);
+            Look(p);
+        }
+    }
+    else if(strcmp(obj->name, "Potion of Shape-Changing") == 0) {
+        if(strcmp(p->currRoom->name, "The Magician's Sanctum") == 0) {
+            printf("You uncork the swirling vial. The liquid inside is pitch-black with glimmers of gold, like stars lost in a storm. "
+                "As you drink, your body tenses — bones realign, muscles shift, skin burns. You feel yourself becoming something else. "
+                "Your reflection in a shard of glass confirms it: \n"
+                "You are now the \033[35mDark Mage\033[0m, cloaked in shadow, with eyes that burn like dying stars.\n"
+                "Your voice feels alien. Your soul... quieter."
+                "\n\n\033[35mYou can now pass through the mirror.\033[0m\n");
+            p->currRoom->south->open = 1;
+            p->currRoom->south->room_from->north->open = 1;
             removeObject(p->inventory, obj);
         }
     }

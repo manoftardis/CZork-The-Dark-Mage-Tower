@@ -91,7 +91,7 @@ void createRooms()
                         "- To the \033[32mwest\033[0m, a \033[33mwooden door\033[0m leads back to the atrium.\n");
     Room* secret1 = initRoom("Secret Room", "You walk through the dark corridor for a few minutes."
                         "The air gets colder and colder until you come across a very old wooden table, lit only by a dim candle. "
-                        "On the table, there is a small wooden \033[31mchest\033[0m. You open it, and inside is a message that reads:\n\n"
+                        "On the table, there is a small \033[31mwooden chest\033[0m. You open it, and inside is a message that reads:\n\n"
                         "This tower is not just a tower. "
                         "It is something that we all have inside of us. It is the shadow that weighs on our hearts every day. "
                         "Some can bear its weight, while others are devoured by it. Whoever built this tower, has not only lost his heart, "
@@ -259,10 +259,16 @@ void createRooms()
         "One title catches your attention:\n\n >“On the Nature of Deceive” - a worn green tome with no author.\n"
         "The spine glows faintly in the candlelight. Unlike the others, this book seems... loose.", floor4, secret2, 0);
 
-    floor4->east = secret_door;
-    secret2->west = secret_door;
+    floor4->west = secret_door;
+    secret2->east = secret_door;
 
-    Door* mirror_door = doorInit("","", secret2, secret3, 0);
+    Door* mirror_door = doorInit("Mirror","The tall mirror towers over you. Its frame is carved from obsidian and bone, twisting with glyphs"
+                            " that seem to move when not watched.\n"
+                            "Your reflection appears murky, distant — unrecognized. You feel a quiet resistance, as if"
+                            " something inside denies your presence. A whisper forms in your mind:\n"
+                            "“You are not the one who bound me.”\n"
+                            "The mirror will not open to your current form.\n"
+                            "Only a master of dark magic — \033[35min his own image\033[0m — may command it.\n\n", secret2, secret3, 0);
 
     secret2->south = mirror_door;
     secret3->north = mirror_door;
@@ -277,6 +283,7 @@ void createRooms()
 
     ObjectContainer* floor1_c = containerInit();
     ObjectContainer* storeroom_c = containerInit();
+    ObjectContainer* secret1_c = containerInit();
     ObjectContainer* cabin_c = containerInit();
     ObjectContainer* floor2_c = containerInit();
     ObjectContainer* statue_c = containerInit();
@@ -284,6 +291,8 @@ void createRooms()
     ObjectContainer* ingredient_c = containerInit();
     ObjectContainer* library_c = containerInit();
     ObjectContainer* secret2_c = containerInit();
+    ObjectContainer* secret3_c = containerInit();
+
 
     //create the objects
         //atrium
@@ -357,13 +366,6 @@ void createRooms()
 
         //Secret chamber room
 
-    Object* mirror = objectInit("Ornate Mirror", "The tall mirror towers over you. Its frame is carved from obsidian and bone, twisting with glyphs"
-                            " that seem to move when not watched.\n"
-                            "Your reflection appears murky, distant — unrecognized. You feel a quiet resistance, as if"
-                            " something inside denies your presence. A whisper forms in your mind:\n"
-                            "“You are not the one who bound me.”\n"
-                            "The mirror will not open to your current form.\n"
-                            "Only a master of dark magic — in his own image — may command it.", 0 ,0 ,0, 0);
     Object* desk = objectInit("Writing Desk", "A desk cluttered with notes, scrolls. A single book lies open on it, a leather bound diary with silver emblem on its cover",0,0,0,0);
     Object* diary = objectInit("Diary", "The diary's leather cover is cracked, as if touched too often by trembling hands. Engraved on"
                             " the front of the diary: Prince Aetherion Larch.. Inside, the early entries speak of affection,"
@@ -398,7 +400,7 @@ void createRooms()
 
     ObjectUsability* vial_usability = objectUsabilityInit();
     vial_usability->usableRoomCount = 1;
-    vial_usability->usableRooms[0] = floor1;
+    vial_usability->usableRooms[0] = storage;
     vial_usability->usedRoomCount = 0;
     vial->usability = vial_usability;
 
@@ -416,6 +418,10 @@ void createRooms()
     addObject(storeroom_c, crates);
     addObject(storeroom_c, crowbar);
 
+        //secret room
+    secret1->inventory = secret1_c;
+    addObject(secret1_c, chest);
+
         //cabin room
     cabin->inventory = cabin_c;
     addObject(cabin_c, key);
@@ -424,10 +430,10 @@ void createRooms()
 
     floor2->inventory = statue_c;
     addObject(statue_c, lens);
-    addObject(statue_c, fang);
-    addObject(statue_c, seal);
     addObject(statue_c, hook);
     addObject(statue_c, shard);
+    addObject(statue_c, fang);
+    addObject(statue_c, seal);
     addObject(statue_c, lockpick);
 
         //alchemy room
@@ -450,6 +456,14 @@ void createRooms()
     floor4->inventory = library_c;
     addObject(library_c, book_key);
     addObject(library_c, book_magic);
+
+        //sanctum room
+    secret2->inventory = secret2_c;
+    addObject(secret2_c, desk);
+    addObject(secret2_c, diary);
+
+    secret3->inventory = secret3_c;
+    addObject(secret3_c, cylinder);
 
 }
 
