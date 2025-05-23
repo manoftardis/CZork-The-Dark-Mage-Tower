@@ -43,7 +43,7 @@ void MoveTo(Player *p, char *dest)
     }
     if(strcmp(p->currRoom->name, "The Mage's Chamber") == 0)
     {
-        if(getObjectFromContainer(p->currRoom->inventory, "Magic Book") == NULL)
+        if(getObjectFromContainer(p->inventory, "Magic Book") != NULL)
         {
             printf("As the prince unleashes his spell, your hand tightens around the Book of Forbidden Arcana. "
                 "A barrier of dark flame erupts before you, matching his power stroke for stroke.\n"
@@ -55,7 +55,7 @@ void MoveTo(Player *p, char *dest)
                 "His body dissolves, not into ash, but into pages — torn fragments of who he once was."
                 "The magical prison fades. The Princess falls to her knees.\n"
                 "> “You… you freed me.”");
-            if(getObjectFromContainer(p->currRoom->inventory, "Music Box") != NULL)
+            if(getObjectFromContainer(p->inventory, "Music Box") != NULL)
             {
                 printf("The pages that once composed the dark wizard float around you and the princess, now free. It's the right time.\n"
                     "You take the music box and activate it with the lever. The music begins to vibrate from the small chest. You embrace and together you shed tears for everything that has happened.\n"

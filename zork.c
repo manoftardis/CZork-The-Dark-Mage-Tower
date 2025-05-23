@@ -161,15 +161,16 @@ void createRooms()
                         " loose parchments.\n"
                         "The air smells of dust and ink, but beneath that… something darker lingers.\n"
                         "Candelabras float slowly near the ceiling, casting wavering light.\n"
-                        "-  To the north, an imposing arched door — flanked by carved columns — stands slightly"
+                        "-  To the \033[32mnorth\033[0m, an imposing arched door — flanked by carved columns — stands slightly"
                         " jar. You sense no magical lock or resistance.\n"
+                        "- To the \033[32meast\033[0m and \033[32mwest\033[0m, the shelves are lined with books, some open, some closed. A few are bound in\n"
                         "“The way forward is clear… but the library seems unwilling to be ignored.”\n");
     Room* secret2 = initRoom("The Magician's Sanctum", "You descend into a dimly lit circular chamber. The air here is cooler, imbued with old power and"
                         " secrets untold.\n"
-                        "To the south, a massive ornate mirror dominates the wall — its surface is cloudy and shifts"
+                        "To the south, a massive ornate \033[33mmirror\033[0m dominates the wall — its surface is cloudy and shifts"
                         " like fog. You feel watched.\n"
-                        "To the north, a writing desk, cluttered with notes, sealed scrolls, and a cracked inkpot. A"
-                        " single book lies open: a leather-bound diary with a silver emblem on its cover.\n"
+                        "To the \033[32mnorth\033[0m, a writing \033[33mdesk\033[0m, cluttered with notes, sealed scrolls, and a cracked inkpot. A"
+                        " single book lies open: a leather-bound \033[33mdiary\033[0m with a silver emblem on its cover.\n"
                         "This room hums with residual magic — heavy, as if the magician still lingers.\n");
     Room* secret3 = initRoom("The void","As if you were the prince, you continue to walk through the path of pale, cold flames. Even with"
                         "the small amount of light these eerie flames provide, this place seems to come from the coldest"
@@ -192,7 +193,7 @@ void createRooms()
                         "to die. The Prince managed to hide his misdeed before the King or anyone else found out. But I"
                         "knew that the old hero would never resort to such an act. I know for a fact that it was him."
                         "Now you have all the pieces to solve this mystery. Be careful though, he will find you."
-                        "You must be ready.");
+                        "You must be ready.\"\n");
     Room* boss = initRoom("The Mage's Chamber", "You ascend the final spiral staircase. The air grows heavier with each step, filled with the scent"
                     " of sulfur and old incense.\n"
                     " The fifth floor opens into a vast chamber, veiled in crimson drapes and black marble. Sigils"
@@ -256,7 +257,7 @@ void createRooms()
     floor4->south = thick_door;
 
     Door* secret_door = doorInit("Suspicious Library","To the west, a curved shelf juts out slightly from the wall, misaligned with the others. The books here are mostly fakes — carved blocks or unreadable bindings.\n"
-        "One title catches your attention:\n\n >“On the Nature of Deceive” - a worn green tome with no author.\n"
+        "One title catches your attention:\n\n >“On the Nature of Deceive” - a worn \033[31mgreen tome\033[0m with no author.\n"
         "The spine glows faintly in the candlelight. Unlike the others, this book seems... loose.", floor4, secret2, 0);
 
     floor4->west = secret_door;
@@ -361,12 +362,13 @@ void createRooms()
     Object* book_magic = objectInit("Magic Book", "The title is seared into the cover in curling silver: “Dominion Through Shadow”"
                             "Flipping it open, the pages are filled with forgotten incantations, blood-bound glyphs, and"
                             " forbidden rites.\n"
-                            "You sense instinctively: you will not survive the final confrontation without this knowledge.”", 0, 0, 1, 0);
+                            "You sense instinctively: \033[34myou will not survive the final confrontation without this knowledge.\033[0m”\n"
+                            "You should \033[31mtake\033[0m this with you", 0, 0, 1, 0);
     Object* book_key = objectInit("Green Tome","“On the Nature of Deceive” – a worn green tome with no author.",0,0,1,1);
 
         //Secret chamber room
 
-    Object* desk = objectInit("Writing Desk", "A desk cluttered with notes, scrolls. A single book lies open on it, a leather bound diary with silver emblem on its cover",0,0,0,0);
+    Object* desk = objectInit("Writing Desk", "A desk cluttered with notes, scrolls. A single book lies open on it, a leather bound \033[31mdiary\033[0m with silver emblem on its cover",0,0,0,0);
     Object* diary = objectInit("Diary", "The diary's leather cover is cracked, as if touched too often by trembling hands. Engraved on"
                             " the front of the diary: Prince Aetherion Larch.. Inside, the early entries speak of affection,"
                             " admiration — obsession. He writes of the princess not as a person, but as a destiny.\n"
